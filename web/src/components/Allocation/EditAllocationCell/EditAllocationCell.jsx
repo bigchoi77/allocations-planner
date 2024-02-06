@@ -66,7 +66,19 @@ export const Success = ({ allocation, people, projects }) => {
   )
 
   const onSave = (input, id) => {
-    updateAllocation({ variables: { id, input } })
+    updateAllocation({
+      variables: {
+        id,
+        input: {
+          endDate: input.endDate,
+          hoursPerWeek: input.hoursPerWeek,
+          loan: input.loan,
+          personId: parseInt(input.personId),
+          projectId: parseInt(input.projectId),
+          startDate: input.startDate,
+        },
+      },
+    })
   }
 
   return (

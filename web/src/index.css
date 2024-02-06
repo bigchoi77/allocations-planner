@@ -1,0 +1,181 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
+
+html,
+body {
+  background: #f3f3f3;
+}
+
+.allocations-grid {
+  display: grid;
+  grid-template-columns: repeat(19, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  margin: 1em auto;
+  max-width: 1200px;
+}
+
+.beach {
+  margin: 1em auto;
+  max-width: 1200px;
+}
+
+.month,
+.week,
+.project {
+  background-color: white;
+  font-size: 0.75em;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.grid-row-wrapper {
+  display: contents;
+}
+
+.month,
+.week,
+.project,
+.allocation {
+  align-items: center;
+  border-bottom: 3px solid #f3f3f3;
+  display: flex;
+  padding: 0.5em;
+}
+
+/* .grid-row-wrapper > div:not(.allocation):not(.modal) {
+  border-bottom: 3px solid #f3f3f3;
+} */
+
+.grid-row-wrapper.is-compact > .allocation {
+  display: none;
+}
+
+.border--right {
+  border-right: 3px solid #f3f3f3;
+}
+
+.border--bottom {
+  border-bottom: 3px solid #f3f3f3;
+}
+
+.margin--top {
+  margin-top: 1.5em;
+}
+
+.allocation {
+  align-self: center;
+  border-radius: 0.75em;
+  font-size: 0.75em;
+  height: 80%;
+}
+
+.allocation a:hover {
+  color: black;
+  transition: 0.3s all ease-in-out;
+}
+
+.allocation--designer {
+  background-color: #c3e5df;
+  border: 2px solid #01a78f;
+  color: #01a78f;
+  font-weight: 700;
+}
+
+.allocation--designer a,
+.person--designer {
+  color: #01a78f;
+}
+
+.allocation--engineer {
+  background-color: #bacde9;
+  border: 2px solid #3374d5;
+  color: #3374d5;
+  font-weight: 700;
+}
+
+.allocation--engineer a,
+.person--engineer {
+  color: #3374d5;
+}
+
+.allocation--pm {
+  background-color: #d9c5e4;
+  border: 2px solid #8b20c9;
+  color: #8b20c9;
+  font-weight: 700;
+}
+
+.allocation--pm a,
+.person--pm {
+  color: #8b20c9;
+}
+
+.allocation--delivery-lead {
+  background-color: #ede9c2;
+  border: 2px solid #e2d00a;
+  color: #8b8111;
+  font-weight: 700;
+}
+
+.allocation--delivery-lead a,
+.person--delivery-lead {
+  color: #8b8111;
+}
+
+.person-image {
+  border: 1px solid white;
+  border-radius: 100%;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  display: inline-block;
+  height: 3em;
+  vertical-align: middle;
+}
+
+.margin--right {
+  margin-right: 0.5em;
+}
+
+.icon {
+  color: #a83232;
+}
+
+small {
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+.modal-background {
+  background-color: rgba(10,10,10,0.75);
+}
+
+.month button {
+  background: none;
+  border: none;
+  color: #4a5568;
+  font-weight: 700;
+}
+
+.title.data-heading {
+  margin-bottom: 0.25em;
+  margin-top: 0.5em;
+}
+
+.beach-people li {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+/* .rw-scaffold ul.list {
+  list-style: disc;
+  padding-left: 1em;
+} */
+
+.list img {
+  height: 2em;
+}

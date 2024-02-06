@@ -3,6 +3,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { checkboxInputTag } from 'src/lib/formatters'
+import { getPersonById, getProjectById } from 'src/lib/functions'
 
 const DELETE_ALLOCATION_MUTATION = gql`
   mutation DeleteAllocationMutation($id: Int!) {
@@ -12,7 +13,7 @@ const DELETE_ALLOCATION_MUTATION = gql`
   }
 `
 
-const Allocation = ({ allocation }) => {
+const Allocation = ({ allocation, people, projects }) => {
   const [deleteAllocation] = useMutation(DELETE_ALLOCATION_MUTATION, {
     onCompleted: () => {
       toast.success('Allocation deleted')
@@ -32,32 +33,27 @@ const Allocation = ({ allocation }) => {
   return (
     <>
       <div className="rw-segment">
-        <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            Allocation {allocation.id} Detail
-          </h2>
-        </header>
         <table className="rw-table">
           <tbody>
             <tr>
-              <th>Id</th>
-              <td>{allocation.id}</td>
+              <th>Person</th>
+              <td>{getPersonById(allocation.personId, people).name}</td>
             </tr>
             <tr>
-              <th>Person id</th>
-              <td>{allocation.personId}</td>
-            </tr>
-            <tr>
-              <th>Project id</th>
-              <td>{allocation.projectId}</td>
+              <th>Project</th>
+              <td>{getProjectById(allocation.projectId, projects).name}</td>
             </tr>
             <tr>
               <th>Start date</th>
-              <td>{allocation.startDate}</td>
+              <td>
+                {new Date(allocation.startDate).toLocaleDateString('en-SG')}
+              </td>
             </tr>
             <tr>
               <th>End date</th>
-              <td>{allocation.endDate}</td>
+              <td>
+                {new Date(allocation.endDate).toLocaleDateString('en-SG')}
+              </td>
             </tr>
             <tr>
               <th>Hours per week</th>

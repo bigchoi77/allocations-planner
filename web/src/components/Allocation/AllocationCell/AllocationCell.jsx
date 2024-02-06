@@ -11,6 +11,18 @@ export const QUERY = gql`
       hoursPerWeek
       loan
     }
+    people: people {
+      id
+      role
+      name
+      timeOff
+      maxHoursPerWeek
+      photo
+    }
+    projects: projects {
+      id
+      name
+    }
   }
 `
 
@@ -22,6 +34,8 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ allocation }) => {
-  return <Allocation allocation={allocation} />
+export const Success = ({ allocation, people, projects }) => {
+  return (
+    <Allocation allocation={allocation} people={people} projects={projects} />
+  )
 }

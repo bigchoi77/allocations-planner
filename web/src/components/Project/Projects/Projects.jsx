@@ -40,8 +40,6 @@ const ProjectsList = ({ projects }) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Start date</th>
-            <th>End date</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -49,16 +47,6 @@ const ProjectsList = ({ projects }) => {
           {projects.map((project) => (
             <tr key={project.id}>
               <td>{truncate(project.name)}</td>
-              <td>
-                {truncate(
-                  new Date(project.startDate).toLocaleDateString('en-SG')
-                )}
-              </td>
-              <td>
-                {truncate(
-                  new Date(project.endDate).toLocaleDateString('en-SG')
-                )}
-              </td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

@@ -27,12 +27,10 @@ describe('projects', () => {
 
   scenario('creates a project', async () => {
     const result = await createProject({
-      input: { name: 'String', startDate: 'String', endDate: 'String' },
+      input: { name: 'String' },
     })
 
     expect(result.name).toEqual('String')
-    expect(result.startDate).toEqual('String')
-    expect(result.endDate).toEqual('String')
   })
 
   scenario('updates a project', async (scenario) => {

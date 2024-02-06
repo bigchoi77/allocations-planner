@@ -6,7 +6,7 @@ import {
   NumberField,
   SelectField,
   TextField,
-  UrlField,
+  // UrlField,
   Submit,
 } from '@redwoodjs/forms'
 
@@ -117,7 +117,7 @@ const PersonForm = (props) => {
           Photo (URL)
         </Label>
 
-        <UrlField
+        <TextField
           name="photo"
           defaultValue={props.person?.photo}
           className="rw-input"

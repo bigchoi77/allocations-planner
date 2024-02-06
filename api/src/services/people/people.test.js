@@ -30,13 +30,13 @@ describe('people', () => {
       input: {
         role: 'String',
         name: 'String',
-        maxHoursPerWeek: 1417701.7543264348,
+        maxHoursPerWeek: 38.5,
       },
     })
 
     expect(result.role).toEqual('String')
     expect(result.name).toEqual('String')
-    expect(result.maxHoursPerWeek).toEqual(1417701.7543264348)
+    expect(result.maxHoursPerWeek).toEqual(38.5)
   })
 
   scenario('updates a person', async (scenario) => {

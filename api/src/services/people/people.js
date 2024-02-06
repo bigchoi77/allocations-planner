@@ -23,7 +23,12 @@ export const updatePerson = ({ id, input }) => {
   })
 }
 
-export const deletePerson = ({ id }) => {
+export const deletePerson = async ({ id }) => {
+  // delete all allocations for person
+  await db.allocation.deleteMany({
+    where: { personId: id },
+  })
+
   return db.person.delete({
     where: { id },
   })

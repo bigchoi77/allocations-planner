@@ -23,7 +23,12 @@ export const updateProject = ({ id, input }) => {
   })
 }
 
-export const deleteProject = ({ id }) => {
+export const deleteProject = async ({ id }) => {
+  // delete all allocations for project
+  await db.allocation.deleteMany({
+    where: { projectId: id },
+  })
+
   return db.project.delete({
     where: { id },
   })

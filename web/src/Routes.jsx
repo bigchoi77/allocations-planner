@@ -9,11 +9,15 @@
 
 import { Set, Router, Route } from '@redwoodjs/router'
 
+import DefaultLayout from 'src/layouts/DefaultLayout/DefaultLayout'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={DefaultLayout}>
+        <Route path="/" page={HomePage} name="home" />
+      </Set>
       <Set wrap={ScaffoldLayout} title="Projects" titleTo="projects" buttonLabel="New Project" buttonTo="newProject">
         <Route path="/projects/new" page={ProjectNewProjectPage} name="newProject" />
         <Route path="/projects/{id:Int}/edit" page={ProjectEditProjectPage} name="editProject" />
@@ -21,7 +25,7 @@ const Routes = () => {
         <Route path="/projects" page={ProjectProjectsPage} name="projects" />
       </Set>
       <Set wrap={ScaffoldLayout} title="Allocations" titleTo="allocations" buttonLabel="New Allocation" buttonTo="newAllocation">
-        <Route path="/" title="Allocations" page={AllocationAllocationsPage} name="home" />
+        {/* <Route path="/" title="Allocations" page={AllocationAllocationsPage} name="home" /> */}
         <Route path="/allocations/new" page={AllocationNewAllocationPage} name="newAllocation" />
         <Route path="/allocations/{id:Int}/edit" page={AllocationEditAllocationPage} name="editAllocation" />
         <Route path="/allocations/{id:Int}" page={AllocationAllocationPage} name="allocation" />

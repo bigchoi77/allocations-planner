@@ -36,8 +36,6 @@ model Person {
 model Project {
   id          Int          @id @default(autoincrement())
   name        String
-  startDate   String
-  endDate     String
   allocations Allocation[]
 }
 

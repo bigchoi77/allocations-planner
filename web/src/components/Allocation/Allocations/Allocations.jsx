@@ -1,109 +1,130 @@
-import { Link, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
-
-import { QUERY } from 'src/components/Allocation/AllocationsCell'
-import { checkboxInputTag, truncate } from 'src/lib/formatters'
-
-const DELETE_ALLOCATION_MUTATION = gql`
-  mutation DeleteAllocationMutation($id: Int!) {
-    deleteAllocation(id: $id) {
-      id
-    }
-  }
-`
+import {
+  getCurrentBeach,
+  getMonthGridCells,
+  getAllocationGridCells,
+  getWeekGridCells,
+} from 'src/lib/functions'
 
 const AllocationsList = ({ allocations, people, projects }) => {
-  const getPersonById = (id) => {
-    return people.filter((person) => person.id === id)[0]
-  }
-  const getProjectById = (id) => {
-    return projects.filter((project) => project.id === id)[0]
-  }
-  const [deleteAllocation] = useMutation(DELETE_ALLOCATION_MUTATION, {
-    onCompleted: () => {
-      toast.success('Allocation deleted')
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-    refetchQueries: [{ query: QUERY }],
-    awaitRefetchQueries: true,
-  })
-
-  const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete allocation ' + id + '?')) {
-      deleteAllocation({ variables: { id } })
-    }
-  }
+  const beachPeople = getCurrentBeach(allocations, people)
+  const pms = beachPeople.filter((person) => person.role === 'pm')
+  const designers = beachPeople.filter((person) => person.role === 'designer')
+  const engineers = beachPeople.filter((person) => person.role === 'engineer')
+  const dls = beachPeople.filter((person) => person.role === 'delivery-lead')
+  console.log(pms)
+  console.log(designers)
+  console.log(engineers)
+  console.log(dls)
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Person</th>
-            <th>Role</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>Hours per week</th>
-            <th>Loan</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allocations.map((allocation) => (
-            <tr key={allocation.id}>
-              <td>{truncate(getProjectById(allocation.projectId).name)}</td>
-              <td>{truncate(getPersonById(allocation.personId).name)}</td>
-              <td>{truncate(getPersonById(allocation.personId).role)}</td>
-              <td>
-                {truncate(
-                  new Date(allocation.startDate).toLocaleDateString('en-SG')
-                )}
-              </td>
-              <td>
-                {truncate(
-                  new Date(allocation.endDate).toLocaleDateString('en-SG')
-                )}
-              </td>
-              <td>{truncate(allocation.hoursPerWeek)}</td>
-              <td>{checkboxInputTag(allocation.loan)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.allocation({ id: allocation.id })}
-                    title={'Show allocation ' + allocation.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editAllocation({ id: allocation.id })}
-                    title={'Edit allocation ' + allocation.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete allocation ' + allocation.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(allocation.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="beach box margin--bottom">
+        <h2 className="title is-5 mb-2">On Beach Currently:</h2>
+        <div className="is-flex">
+          <div className="is-flex-grow-1">
+            <h3 className="title is-6 mb-1">PMs</h3>
+            <ul className="list">
+              {pms.map((pm) => (
+                <li key={pm.id} className="person--pm">
+                  {pm.photo && (
+                    <img
+                      className="person-image margin--right"
+                      src={pm.photo}
+                      alt={pm.name}
+                    />
+                  )}
+
+                  {pm.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="is-flex-grow-1">
+            <h3 className="title is-6 mb-1">Designers</h3>
+            <ul className="list">
+              {designers.map((designer) => (
+                <li key={designer.id} className="person--designer">
+                  {designer.photo && (
+                    <img
+                      className="person-image margin--right"
+                      src={designer.photo}
+                      alt={designer.name}
+                    />
+                  )}
+
+                  {designer.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="is-flex-grow-1">
+            <h3 className="title is-6 mb-1">Engineers</h3>
+            <ul className="list">
+              {engineers.map((engineer) => (
+                <li key={engineer.id} className="person--engineer">
+                  {engineer.photo && (
+                    <img
+                      className="person-image margin--right"
+                      src={engineer.photo}
+                      alt={engineer.name}
+                    />
+                  )}
+
+                  {engineer.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="is-flex-grow-1">
+            <h3 className="title is-6 mb-1">DLs</h3>
+            <ul className="list">
+              {dls.map((dl) => (
+                <li key={dl.id} className="person--delivery-lead">
+                  {dl.photo && (
+                    <img
+                      className="person-image margin--right"
+                      src={dl.photo}
+                      alt={dl.name}
+                    />
+                  )}
+
+                  {dl.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="allocations-grid">
+        <div className="grid-row-wrapper border--bottom">
+          <div
+            className="border--right"
+            style={{ gridArea: '1 / 1 / 2 / 2' }}
+          ></div>
+          {getMonthGridCells({
+            allocations,
+            people,
+            projects,
+          })}
+        </div>
+
+        <div className="grid-row-wrapper border--bottom">
+          <div
+            className="border--bottom border--right week"
+            style={{ gridArea: '2 / 1 / 3 / 2' }}
+          >
+            Week Start
+          </div>
+          {getWeekGridCells({
+            allocations,
+            people,
+            projects,
+          })}
+        </div>
+
+        {getAllocationGridCells({ allocations, people, projects })}
+      </div>
+    </>
   )
 }
 

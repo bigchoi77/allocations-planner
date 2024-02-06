@@ -5,8 +5,6 @@ export const QUERY = gql`
     project: project(id: $id) {
       id
       name
-      startDate
-      endDate
     }
   }
 `

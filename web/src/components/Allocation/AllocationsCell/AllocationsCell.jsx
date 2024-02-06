@@ -1,6 +1,6 @@
 import { Link, routes } from '@redwoodjs/router'
 
-import Allocations from 'src/components/Allocation/Allocations'
+import Allocations from 'src/components/Allocation/Allocations/Allocations'
 
 export const QUERY = gql`
   query FindAllocations {
@@ -24,8 +24,6 @@ export const QUERY = gql`
     projects: projects {
       id
       name
-      startDate
-      endDate
     }
   }
 `

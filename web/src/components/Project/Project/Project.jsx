@@ -43,14 +43,6 @@ const Project = ({ project }) => {
               <th>Name</th>
               <td>{project.name}</td>
             </tr>
-            <tr>
-              <th>Start date</th>
-              <td>{new Date(project.startDate).toLocaleDateString('en-SG')}</td>
-            </tr>
-            <tr>
-              <th>End date</th>
-              <td>{new Date(project.endDate).toLocaleDateString('en-SG')}</td>
-            </tr>
           </tbody>
         </table>
       </div>
