@@ -2,6 +2,7 @@ export const schema = gql`
   type Project {
     id: Int!
     name: String!
+    confidence: Int
     allocations: [Allocation]!
   }
 
@@ -12,10 +13,12 @@ export const schema = gql`
 
   input CreateProjectInput {
     name: String!
+    confidence: Int
   }
 
   input UpdateProjectInput {
     name: String
+    confidence: Int
   }
 
   type Mutation {

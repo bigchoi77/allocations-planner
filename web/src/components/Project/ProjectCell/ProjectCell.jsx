@@ -5,6 +5,7 @@ export const QUERY = gql`
     project: project(id: $id) {
       id
       name
+      confidence
     }
   }
 `

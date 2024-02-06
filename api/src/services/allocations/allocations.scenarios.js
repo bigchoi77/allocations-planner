@@ -14,7 +14,7 @@ export const standard = defineScenario({
           },
         },
         project: {
-          create: { name: 'String', startDate: 'String', endDate: 'String' },
+          create: { name: 'String', confidence: 100 },
         },
       },
     },
@@ -32,7 +32,7 @@ export const standard = defineScenario({
           },
         },
         project: {
-          create: { name: 'String', startDate: 'String', endDate: 'String' },
+          create: { name: 'String', confidence: 100 },
         },
       },
     },

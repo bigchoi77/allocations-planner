@@ -40,6 +40,7 @@ const ProjectsList = ({ projects }) => {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Confidence</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -47,6 +48,7 @@ const ProjectsList = ({ projects }) => {
           {projects.map((project) => (
             <tr key={project.id}>
               <td>{truncate(project.name)}</td>
+              <td>{truncate(project.confidence)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

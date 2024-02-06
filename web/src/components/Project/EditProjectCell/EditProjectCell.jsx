@@ -9,6 +9,7 @@ export const QUERY = gql`
     project: project(id: $id) {
       id
       name
+      confidence
     }
   }
 `
@@ -17,6 +18,7 @@ const UPDATE_PROJECT_MUTATION = gql`
     updateProject(id: $id, input: $input) {
       id
       name
+      confidence
     }
   }
 `

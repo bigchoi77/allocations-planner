@@ -36,6 +36,7 @@ model Person {
 model Project {
   id          Int          @id @default(autoincrement())
   name        String
+  confidence  Int?
   allocations Allocation[]
 }
 

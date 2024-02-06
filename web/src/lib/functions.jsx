@@ -327,7 +327,9 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
   const gridCells = []
   let projectCells = []
 
-  let p = projects.slice().sort((a, b) => a.name.localeCompare(b.name))
+  let p = projects
+    .slice()
+    .sort((a, b) => b.confidence - a.confidence || a.name.localeCompare(b.name))
 
   let currentProjectRow = 3
 
@@ -350,7 +352,9 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
         key={p[i].name}
         style={{ gridArea }}
       >
-        <Link to={routes.project({ id: p[i].id })}>{p[i].name}</Link>
+        <Link to={routes.project({ id: p[i].id })}>
+          {p[i].name} ({p[i].confidence}%)
+        </Link>
       </div>
     )
 

@@ -27,20 +27,22 @@ describe('projects', () => {
 
   scenario('creates a project', async () => {
     const result = await createProject({
-      input: { name: 'String' },
+      input: { name: 'String', confidence: 10 },
     })
 
     expect(result.name).toEqual('String')
+    expect(result.confidence).toEqual(10)
   })
 
   scenario('updates a project', async (scenario) => {
     const original = await project({ id: scenario.project.one.id })
     const result = await updateProject({
       id: original.id,
-      input: { name: 'String2' },
+      input: { name: 'String2', confidence: 50 },
     })
 
     expect(result.name).toEqual('String2')
+    expect(result.confidence).toEqual(50)
   })
 
   scenario('deletes a project', async (scenario) => {

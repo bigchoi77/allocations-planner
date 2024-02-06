@@ -13,8 +13,7 @@ export const QUERY = gql`
     projects: projects {
       id
       name
-      startDate
-      endDate
+      confidence
     }
   }
 `

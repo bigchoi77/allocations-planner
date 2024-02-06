@@ -43,6 +43,10 @@ const Project = ({ project }) => {
               <th>Name</th>
               <td>{project.name}</td>
             </tr>
+            <tr>
+              <th>Confidence</th>
+              <td>{project.confidence}</td>
+            </tr>
           </tbody>
         </table>
       </div>

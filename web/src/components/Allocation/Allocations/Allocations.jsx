@@ -11,10 +11,6 @@ const AllocationsList = ({ allocations, people, projects }) => {
   const designers = beachPeople.filter((person) => person.role === 'designer')
   const engineers = beachPeople.filter((person) => person.role === 'engineer')
   const dls = beachPeople.filter((person) => person.role === 'delivery-lead')
-  console.log(pms)
-  console.log(designers)
-  console.log(engineers)
-  console.log(dls)
 
   return (
     <>
