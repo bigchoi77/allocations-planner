@@ -48,7 +48,7 @@ const ProjectForm = (props) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Confidence
+          Confidence (%)
         </Label>
 
         <NumberField
