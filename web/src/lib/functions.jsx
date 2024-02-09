@@ -61,7 +61,8 @@ const getTotalPotentialUtilization = (month, people) => {
   for (let i = 0; i < people.length; i++) {
     const country = people[i].maxHoursPerWeek === 40 ? 'singapore' : 'australia'
     const workingDays = getWorkDaysForCountry(country)[month]
-    maxHours += (people[i].maxHoursPerWeek / 5) * workingDays
+    if (people[i].role !== 'delivery-lead')
+      maxHours += (people[i].maxHoursPerWeek / 5) * workingDays
   }
 
   return maxHours
@@ -76,8 +77,8 @@ const getWorkDaysForCountry = (country) => {
 
 const getWorkDatesInRange = (s, e) => {
   let a = []
-  for (let d = new Date(s); d <= new Date(e); d.setDate(d.getDate() + 1)) {
-    if (new Date(d).getDay() % 6 !== 0) a.push(new Date(d))
+  for (let d = getNewDate(s); d <= getNewDate(e); d.setDate(d.getDate() + 1)) {
+    if (getNewDate(d).getDay() % 6 !== 0) a.push(getNewDate(d))
   }
   return a
 }
@@ -91,45 +92,46 @@ const getTotalAllocation = (month, allocations, people) => {
   for (let i = 0; i < allocations.length; i++) {
     let allocatedDates = 0
     if (
-      new Date(allocations[i].startDate) <= firstDayOfMonth &&
-      new Date(allocations[i].endDate) > lastDayOfMonth
+      getNewDate(allocations[i].startDate) <= firstDayOfMonth &&
+      getNewDate(allocations[i].endDate) > lastDayOfMonth
     )
       allocatedDates = getWorkDatesInRange(firstDayOfMonth, lastDayOfMonth)
     if (
-      new Date(allocations[i].startDate) <= firstDayOfMonth &&
-      new Date(allocations[i].endDate) <= lastDayOfMonth
+      getNewDate(allocations[i].startDate) <= firstDayOfMonth &&
+      getNewDate(allocations[i].endDate) <= lastDayOfMonth
     )
       allocatedDates = getWorkDatesInRange(
         firstDayOfMonth,
-        new Date(allocations[i].endDate)
+        getNewDate(allocations[i].endDate)
       )
     if (
-      new Date(allocations[i].startDate) >= firstDayOfMonth &&
-      new Date(allocations[i].endDate) > lastDayOfMonth
+      getNewDate(allocations[i].startDate) >= firstDayOfMonth &&
+      getNewDate(allocations[i].endDate) > lastDayOfMonth
     )
       allocatedDates = getWorkDatesInRange(
-        new Date(allocations[i].startDate),
+        getNewDate(allocations[i].startDate),
         lastDayOfMonth
       )
     if (
-      new Date(allocations[i].startDate) >= firstDayOfMonth &&
-      new Date(allocations[i].endDate) <= lastDayOfMonth
+      getNewDate(allocations[i].startDate) >= firstDayOfMonth &&
+      getNewDate(allocations[i].endDate) <= lastDayOfMonth
     )
       allocatedDates = getWorkDatesInRange(
-        new Date(allocations[i].startDate),
-        new Date(allocations[i].endDate)
+        getNewDate(allocations[i].startDate),
+        getNewDate(allocations[i].endDate)
       )
 
     if (
-      new Date(allocations[i].startDate) <= lastDayOfMonth &&
-      new Date(allocations[i].endDate) >= firstDayOfMonth
+      getNewDate(allocations[i].startDate) <= lastDayOfMonth &&
+      getNewDate(allocations[i].endDate) >= firstDayOfMonth
     ) {
       let daysAllocated = allocatedDates.length
       const person = getPersonById(allocations[i].personId, people)
       const country = person.maxHoursPerWeek === 40 ? 'singapore' : 'australia'
       const workDays = getWorkDaysForCountry(country)
       if (daysAllocated > workDays) daysAllocated = workDays
-      totalHoursAllocated += (person.maxHoursPerWeek / 5) * daysAllocated
+      if (person.role !== 'delivery-lead')
+        totalHoursAllocated += (person.maxHoursPerWeek / 5) * daysAllocated
     }
   }
 
@@ -263,19 +265,37 @@ export const getMonthGridCells = ({ allocations, people }) => {
   return gridCells
 }
 
-const getAllocationsForProject = (allocations, project) => {
-  return allocations.filter((allocation) => allocation.projectId === project.id)
+const getAllocationsForProject = (allocations, project, people) => {
+  let allocationsForProject = allocations.filter(
+    (allocation) => allocation.projectId === project.id
+  )
+  return allocationsForProject
+    .slice()
+    .sort((a, b) =>
+      getPersonById(a.personId, people).role.localeCompare(
+        getPersonById(b.personId, people).role
+      )
+    )
+}
+
+const getNewDate = (date) => {
+  let d = new Date(date)
+  d = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+  d.setHours(0, 0, 0)
+  return d
 }
 
 const getColumnStart = (allocation, weeks) => {
-  const startDate = new Date(allocation.startDate)
-  const endDate = new Date(allocation.endDate)
-  if (startDate < new Date(weeks[0]) && endDate >= new Date(weeks[0])) return 2
+  const startDate = getNewDate(allocation.startDate)
+  const endDate = getNewDate(allocation.endDate)
+  if (startDate < getNewDate(weeks[0]) && endDate >= getNewDate(weeks[0]))
+    return 2
 
   for (let i = 0; i < weeks.length; i++) {
-    let rangeStart = new Date(weeks[i])
-    let rangeEnd = new Date(rangeStart)
+    let rangeStart = getNewDate(weeks[i])
+    let rangeEnd = getNewDate(rangeStart)
     rangeEnd.setDate(rangeStart.getDate() + 7)
+
     if (startDate >= rangeStart && startDate < rangeEnd) return i + 2
   }
 
@@ -283,17 +303,17 @@ const getColumnStart = (allocation, weeks) => {
 }
 
 const getColumnEnd = (allocation, weeks) => {
-  const startDate = new Date(allocation.startDate)
-  const endDate = new Date(allocation.endDate)
+  const startDate = getNewDate(allocation.startDate)
+  const endDate = getNewDate(allocation.endDate)
   if (
-    startDate < new Date(weeks[weeks.length - 1]) &&
-    endDate >= new Date(weeks[weeks.length - 1])
+    startDate < getNewDate(weeks[weeks.length - 1]) &&
+    endDate >= getNewDate(weeks[weeks.length - 1])
   )
     return weeks.length + 2
 
   for (let i = 0; i < weeks.length; i++) {
-    let rangeStart = new Date(weeks[i])
-    let rangeEnd = new Date(rangeStart)
+    let rangeStart = getNewDate(weeks[i])
+    let rangeEnd = getNewDate(rangeStart)
     rangeEnd.setDate(rangeStart.getDate() + 7)
     if (endDate > rangeStart && endDate < rangeEnd) return i + 3
   }
@@ -314,8 +334,8 @@ const isOverlapping = (allocation, allocations) => {
     if (
       allocations[i].id !== allocation.id &&
       allocations[i].personId === allocation.personId &&
-      new Date(allocations[i].startDate) <= new Date(allocation.endDate) &&
-      new Date(allocations[i].endDate) >= new Date(allocation.startDate)
+      getNewDate(allocations[i].startDate) <= getNewDate(allocation.endDate) &&
+      getNewDate(allocations[i].endDate) >= getNewDate(allocation.startDate)
     ) {
       return true
     }
@@ -336,7 +356,11 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
   for (let i = 0; i < p.length; i++) {
     projectCells = []
 
-    const allocationsForProject = getAllocationsForProject(allocations, p[i])
+    const allocationsForProject = getAllocationsForProject(
+      allocations,
+      p[i],
+      people
+    )
 
     // first add the project name cell
     let gridArea =
