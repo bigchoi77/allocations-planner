@@ -15,33 +15,6 @@ const AllocationsList = ({ allocations, people, projects }) => {
   const dls = beachPeople.filter((person) => person.role === 'delivery-lead')
 
   const grid = useRef()
-  const [stickyMonths, setStickyMonths] = useState([])
-
-  useEffect(() => {
-    const children = grid.current.children[0].children
-    const elements = []
-
-    for (let i = 0; i < children.length; i++) {
-      const dimensions = children[i].getBoundingClientRect()
-      if (children[i].classList.contains('month')) {
-        elements.push(
-          <div
-            className="sticky-month month border--right"
-            key={Math.random()}
-            style={{
-              height: dimensions.height,
-              width: dimensions.width,
-              top: dimensions.y,
-              left: dimensions.x,
-            }}
-          >
-            {children[i].textContent}
-          </div>
-        )
-      }
-    }
-    setStickyMonths(elements)
-  }, [])
 
   return (
     <>
@@ -121,9 +94,6 @@ const AllocationsList = ({ allocations, people, projects }) => {
             </ul>
           </div>
         </div>
-      </div>
-      <div className="sticky-container">
-        {stickyMonths.map((stickyMonth) => stickyMonth)}
       </div>
 
       <div className="allocations-grid" ref={grid}>

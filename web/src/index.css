@@ -192,3 +192,11 @@ button {
   pointer-events: none;
   position: sticky;
 }
+
+.not-found {
+  background-size: cover;
+  background-image: url('/images/keepout.gif');
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}

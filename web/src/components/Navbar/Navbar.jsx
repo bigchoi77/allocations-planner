@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
+import { useAuth } from 'src/auth'
+
 const Navbar = () => {
+  const { isAuthenticated, logIn } = useAuth()
   const [isOpen, setOpen] = useState(false)
   const toggleState = (e) => {
     e.preventDefault()
@@ -29,32 +32,45 @@ const Navbar = () => {
         id="navbar"
         className={isOpen ? 'navbar-menu is-active' : 'navbar-menu'}
       >
-        <div className="navbar-start">
-          <a className="navbar-item" href="/allocations">
-            Allocations
-          </a>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link" href="/people">
-              People
+        {isAuthenticated && (
+          <div className="navbar-start">
+            <a className="navbar-item" href="/allocations">
+              Allocations
             </a>
 
-            <div className="navbar-dropdown">
-              <a className="navbar-item" href="/people/new">
-                Add someone
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a className="navbar-link" href="/people">
+                People
               </a>
+
+              <div className="navbar-dropdown">
+                <a className="navbar-item" href="/people/new">
+                  Add someone
+                </a>
+              </div>
+            </div>
+
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a className="navbar-link" href="/projects">
+                Projects
+              </a>
+
+              <div className="navbar-dropdown">
+                <a className="navbar-item" href="/projects/new">
+                  Create a project
+                </a>
+              </div>
             </div>
           </div>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link" href="/projects">
-              Projects
-            </a>
-
-            <div className="navbar-dropdown">
-              <a className="navbar-item" href="/projects/new">
-                Create a project
-              </a>
+        )}
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              {!isAuthenticated && (
+                <button className="button is-light" onClick={logIn}>
+                  Log in
+                </button>
+              )}
             </div>
           </div>
         </div>

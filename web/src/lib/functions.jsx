@@ -405,6 +405,16 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
           key={'allocation' + allocationsForProject[j].id}
           style={{ gridArea }}
         >
+          {person.isOnVisa && (
+            <span
+              className="icon margin--right"
+              title="On a Work Visa"
+              style={{ cursor: 'help' }}
+            >
+              <i className="fa-brands fa-cc-visa"></i>
+            </span>
+          )}
+
           {allocationsForProject[j].loan && (
             <span
               className="icon margin--right"

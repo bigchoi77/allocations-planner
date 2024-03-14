@@ -1,4 +1,5 @@
 import {
+  CheckboxField,
   Form,
   FormError,
   FieldError,
@@ -125,6 +126,23 @@ const PersonForm = (props) => {
         />
 
         <FieldError name="photo" className="rw-field-error" />
+
+        <Label
+          name="isOnVisa"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          On Work Visa?
+        </Label>
+
+        <CheckboxField
+          name="isOnVisa"
+          defaultChecked={props.person?.isOnVisa}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+        />
+
+        <FieldError name="isOnVisa" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

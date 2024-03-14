@@ -11,6 +11,7 @@ export const QUERY = gql`
       timeOff
       maxHoursPerWeek
       photo
+      isOnVisa
     }
   }
 `

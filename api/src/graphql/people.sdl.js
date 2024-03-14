@@ -7,6 +7,7 @@ export const schema = gql`
     maxHoursPerWeek: Float!
     allocations: [Allocation]!
     photo: String
+    isOnVisa: Boolean
   }
 
   type Query {
@@ -20,6 +21,7 @@ export const schema = gql`
     timeOff: String
     maxHoursPerWeek: Float!
     photo: String
+    isOnVisa: Boolean
   }
 
   input UpdatePersonInput {
@@ -28,6 +30,7 @@ export const schema = gql`
     timeOff: String
     maxHoursPerWeek: Float
     photo: String
+    isOnVisa: Boolean
   }
 
   type Mutation {
