@@ -19,3 +19,8 @@
   from = "/*"
   to = "/200.html"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Basic-Auth = "pivotal:alwaysbekind"
