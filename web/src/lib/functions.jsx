@@ -10,7 +10,7 @@ const getWeeks = () => {
   const getMonday = (d) =>
     new Date(d.setDate(d.getDate() - (d.getDay() || 7) + 1))
 
-  for (let i = 1; i < 19; i++) {
+  for (let i = 1; i < 31; i++) {
     weeks.push(getMonday(date))
     date.setDate(date.getDate() + 7)
   }
