@@ -415,6 +415,16 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
             </span>
           )}
 
+          {person.isOnTransition && (
+            <span
+              className="icon margin--right icon--red"
+              title="On transition"
+              style={{ cursor: 'help' }}
+            >
+              <i className="fas fa-triangle-exclamation"></i>
+            </span>
+          )}
+
           {allocationsForProject[j].loan && (
             <span
               className="icon margin--right"
@@ -431,7 +441,7 @@ export const getAllocationGridCells = ({ allocations, people, projects }) => {
               title="Already allocated"
               style={{ cursor: 'help' }}
             >
-              <i className="fas fa-triangle-exclamation"></i>
+              <i className="fa-solid fa-d"></i>
             </span>
           )}
 

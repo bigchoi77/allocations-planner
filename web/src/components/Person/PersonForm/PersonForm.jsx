@@ -144,6 +144,23 @@ const PersonForm = (props) => {
 
         <FieldError name="isOnVisa" className="rw-field-error" />
 
+        <Label
+          name="isOnTransition"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          On Transition?
+        </Label>
+
+        <CheckboxField
+          name="isOnTransition"
+          defaultChecked={props.person?.isOnTransition}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+        />
+
+        <FieldError name="isOnTransition" className="rw-field-error" />
+
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
             Save

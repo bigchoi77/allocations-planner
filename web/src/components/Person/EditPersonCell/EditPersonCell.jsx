@@ -14,6 +14,7 @@ export const QUERY = gql`
       maxHoursPerWeek
       photo
       isOnVisa
+      isOnTransition
     }
   }
 `
@@ -26,6 +27,8 @@ const UPDATE_PERSON_MUTATION = gql`
       timeOff
       maxHoursPerWeek
       photo
+      isOnVisa
+      isOnTransition
     }
   }
 `

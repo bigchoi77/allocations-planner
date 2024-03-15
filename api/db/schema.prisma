@@ -32,6 +32,7 @@ model Person {
   allocations     Allocation[]
   photo           String?
   isOnVisa        Boolean?
+  isOnTransition  Boolean?
 }
 
 model Project {

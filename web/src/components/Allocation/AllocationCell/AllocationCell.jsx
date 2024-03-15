@@ -19,6 +19,7 @@ export const QUERY = gql`
       maxHoursPerWeek
       photo
       isOnVisa
+      isOnTransition
     }
     projects: projects {
       id
